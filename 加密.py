@@ -7,6 +7,19 @@ import execjs
 
 
 class MeituanEncryptor(object):
+    def __init__(self, endDate, getNewVo, lastLabel, nextLabel, requestWmPoiId, signToken, sortField, startDate,
+                 wmOrderPayType, wmOrderStatus):
+        self.endDate = endDate
+        self.getNewVo = getNewVo
+        self.lastLabel = lastLabel
+        self.nextLabel = nextLabel
+        self.requestWmPoiId = requestWmPoiId
+        self.signToken = signToken
+        self.sortField = sortField
+        self.startDate = startDate
+        self.wmOrderPayType = wmOrderPayType
+        self.wmOrderStatus = wmOrderStatus
+
     def compress_data(self, data):
         """压缩token和sign参数的方法
         转为JSON字符串，使用zlib压缩，再使用base64编码
@@ -31,7 +44,18 @@ class MeituanEncryptor(object):
         由各种乱七八糟的信息组成的字典，进行URL编码，URL参数拼接，然后压缩
         """
         # 双层引号不能换行,表单数据
-        sign_data = '"endDate=2018-12-07&getNewVo=1&lastLabel=&nextLabel=&requestWmPoiId=-1&signToken=Nw;1;qim1`[vGrD-36L:E4t:p27G[Qg`7h@{cadLIpNV{XUsEZDcEnIVLc2[vjH@){`2nCXdkK`:K2z4RP0Mhwz3ga2x-zChCs1QK6OpcMgIAdhhx@X@5Q7h)cVGPtfS3nP@npR`t{w4S[LaUOR;ZC&sortField=1&startDate=2018-12-07&wmOrderPayType=2&wmOrderStatus=-2"'
+        sign_data = '"endDate={}&getNewVo={}&lastLabel={}&nextLabel={}&requestWmPoiId={}&signToken={}&sortField={}&startDate={}&wmOrderPayType={}&wmOrderStatus={}"'.format(
+            self.endDate,
+            self.getNewVo,
+            self.lastLabel,
+            self.nextLabel,
+            self.requestWmPoiId,
+            self.signToken,
+            self.sortField,
+            self.startDate,
+            self.wmOrderPayType,
+            self.wmOrderStatus,
+        )
         sign_data1 = self.compress_data1(sign_data)
         return sign_data1
 
@@ -62,7 +86,8 @@ class MeituanEncryptor(object):
         token_data1 = self.get_urlencode(token_data1)
         return token_data1
 
-    def get_js(self):
+    @staticmethod
+    def get_js():
         f = open("behavor_js.js", 'r', encoding='utf-8')  # 打开JS文件
         line = f.readline()
         htmlstr = ''
@@ -79,4 +104,14 @@ class MeituanEncryptor(object):
 
 
 if __name__ == '__main__':
-    pass
+    call = MeituanEncryptor(endDate="",
+                            getNewVo="",
+                            lastLabel="",
+                            nextLabel="",
+                            requestWmPoiId="",
+                            signToken="",
+                            sortField="",
+                            startDate="",
+                            wmOrderPayType="",
+                            wmOrderStatus="")
+    call.get_token()
