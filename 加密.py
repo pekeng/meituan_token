@@ -70,8 +70,8 @@ class MeituanEncryptor(object):
         time.sleep(0.01)
         token_data = {
             "rId": 100007,
-            "ts": ts,
-            "cts": int(time.time() * 1000),
+            "ts": 1544427092919,
+            "cts": 1544427092919,
             "brVD": [1920, 1080],
             "brR": [[1920, 1080], [1920, 1040], 24, 24],
             "bI": [url, ver_url],
@@ -81,6 +81,9 @@ class MeituanEncryptor(object):
             "tT": [],
             "sign": self.get_sign()
         }
+        print(1111)
+        print(token_data)
+        print(2222)
         token_data1 = self.compress_data(token_data)
         # url编码这里用python的编码有问题所以调用js
         token_data1 = self.get_urlencode(token_data1)
@@ -104,14 +107,14 @@ class MeituanEncryptor(object):
 
 
 if __name__ == '__main__':
-    call = MeituanEncryptor(endDate="",
-                            getNewVo="",
+    call1 = MeituanEncryptor(endDate="2018-12-10",
+                            getNewVo="1",
                             lastLabel="",
                             nextLabel="",
-                            requestWmPoiId="",
-                            signToken="",
-                            sortField="",
-                            startDate="",
-                            wmOrderPayType="",
-                            wmOrderStatus="")
-    call.get_token()
+                            requestWmPoiId="6149813",
+                            signToken="z-dZEPTuGvdXx4@fj2{GCZe:QMHwFMk46z`gZw@lz;wjuHlFoXi-qAg1UEWIO0Cz)TnqLAISmz3-TZLaKR4;3va;zj-IQ5pAuTn0MPi{X[Ale3aWaNxuvvDCuP)jejDotgCkCR;IwnNN7SHr64s6je",
+                            sortField="1",
+                            startDate="2018-12-10",
+                            wmOrderPayType="2",
+                            wmOrderStatus="-2")
+    print(call1.get_token())
